@@ -413,7 +413,7 @@ const analysis = async (req, res) => {
         systemInstruction:
             'you are a medical reports analyzer which analyze the reports and give output in a specific format where the  Keys are summary of analysis, Date of report , Precautions, Possible disease risks, severity rating out of 10, which specialist(one or less) is needed. the format of output should be in:  Short-Analysis:String,Precautions:Array,Possible-disease risks:Array,Severity:int,specialist:String as json format\n',
     });
-    jsonObject["chronic conditions"] = await patient.findOne({ _id: patientId }).select({ 'chronics': 1, '-_id': 1 });
+    jsonObject["chronic conditions"] = await patient.findOne({ _id :patientId }).select({ 'chronics': 1, '-_id': 1 });
     
     const generationConfig = {
         temperature: 0,
@@ -464,14 +464,21 @@ const analysis = async (req, res) => {
     a.patientId=patientId;
     a.file=fileId;
     a.valuesFromReport=jsonObject;
-    if (jsonObject['date']) {
-        const str = jsonObject['date'];
-        a.dateOfReport = new Date(
-            str.slice(6, 10) + '/' + str.slice(3, 5) + '/' + str.slice(0, 2)
-        );
-    } else {
-        a.dateOfReport = new Date();
-    }
+    a.dateOfReport = new Date();
+    // if (jsonObject['date']) {
+    //     console.log(jsonObject['date']);
+    //     const str = jsonObject['date'];
+    //     try{
+    //         let date=new Date(
+    //             str.slice(6, 10) + '/' + str.slice(3, 5) + '/' + str.slice(0, 2)
+    //         );
+    //         a.dateOfReport=date;
+    //     }catch(e){
+    //         a.dateOfReport = new Date();
+    //     } 
+    // } else {
+    //     a.dateOfReport = new Date();
+    // }
     a.isVerified=false;
 
     await a.save();

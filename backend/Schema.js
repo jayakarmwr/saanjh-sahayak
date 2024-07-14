@@ -1,20 +1,15 @@
 const { ObjectId } = require('mongodb')
 const mongoose = require('mongoose')
-const patientSchema = new mongoose.Schema({
-  patientName: { type: String, required: true },
-  age: { type: Number, required: true },
-  bloodGroup: { type: String, required: true },
-  medicalHistory: { type: String, required: true },
-  gender: { type: String, required: true },
-  fileId: {
-    type: Array // Reference to the 'File' collection where PDFs are stored
-},
-prediction: { type: String },
-doctorName: {type:String},
-suggestedTreatment: {type:String},
-medications: {type:String}
- 
-});
+patientSchema = new mongoose.Schema({
+    patientID:Number,
+    name: String,
+    DOB:Date,
+    gender: String,
+    chronics:Array,//Chronical diseases like diabetes,BP
+    phone:Number,
+    reportsList:Array,//latest report is at 0 index
+    bloodGroup:String,
+})
 oldAgeHomeSchema=new mongoose.Schema({
     name:String,
     doctors:Array,
@@ -32,8 +27,11 @@ reportSchema = new mongoose.Schema({
     precautions: Array,
     severity:Number,
     summary: String,
+    specialistReq: String,
     possibleDiseases: Array,
-    doctorNotes: ObjectId//prescribtion
+    doctorNotes: String,//prescribtion
+    periodicAnalysis:String,
+    isVerified:Boolean
   });
 
 doctorSchema = new mongoose.Schema({
@@ -41,10 +39,16 @@ doctorSchema = new mongoose.Schema({
     specialization: String
 });
 
+PdfSchema = new mongoose.Schema({
+    name: String,
+    data: Buffer,
+  });
 
-const patient_data = mongoose.model('patient_data', patientSchema);
+const patient = mongoose.model('patient', patientSchema);
 const report = mongoose.model('report', reportSchema);
 const oldAgeHome = mongoose.model('oldAgeHome', oldAgeHomeSchema);
 const doctor = mongoose.model('doctor', doctorSchema);
+const Pdf=mongoose.model('pdf',PdfSchema)
 
-module.exports = { patient_data, report , oldAgeHome, doctor}
+
+module.exports = { patient, report , oldAgeHome, doctor,Pdf}

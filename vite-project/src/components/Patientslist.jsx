@@ -34,17 +34,17 @@ export default function Patientslist() {
             <th scope="col">Name</th>
             <th scope="col">Blood Group</th>
             <th scope="col">Gender</th>
-            <th scope="col">Age</th>
+            
           </tr>
         </thead>
         <tbody>
           {Patients.map((patient) => (
-            <tr key={patient._id} onClick={() => handlePatientClick(patient._id)}>
-              <th scope="row">{patient._id}</th>
-              <td>{patient.patientName.toUpperCase()}</td>
-              <td>{patient.bloodGroup}</td>
+            <tr key={patient.patientID} onClick={() => handlePatientClick(patient._id)}>
+              <th scope="row">{patient.patientID}</th>
+              <td>{patient.name.toUpperCase()}</td>
+              <td>{patient.DOB}</td>
               <td>{patient.gender.toUpperCase()}</td>
-              <td>{patient.age}</td>
+              
             </tr>
           ))}
         </tbody>

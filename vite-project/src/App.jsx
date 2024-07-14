@@ -13,6 +13,7 @@ import Chatbot from './components/Chatbot';
 
 
 
+
 function App() {
   return (
     <BrowserRouter>
@@ -27,6 +28,7 @@ function App() {
       {/*<Route path='/patientform' element={<PatientForm/>}/>*/}
       <Route path='/form' element={<Load/>}/>
       <Route path='/chatbot' element={<Chatbot/>}/>
+     
      
 
       

@@ -1,12 +1,12 @@
 
 
 const { GoogleGenerativeAI } = require('@google/generative-ai')
-const { patient_data } = require("../Schema");
+const { patient} = require("../Schema");
 
 
 const getPatients = async (req, res) => {
   try {
-    const Patients = await patient_data.find();
+    const Patients = await patient.find();
   //  console.log("hi")
     res.send(Patients);
   } catch (err) {
@@ -20,7 +20,7 @@ const getpatientdetails=async(req,res)=>
     //console.log('Fetching details for ID:', id);
 
   try {
-    const data = await patient_data.find({ _id: id });
+    const data = await patient.find({ _id: id });
     //console.log(data);
     res.send(data);
   } catch (error) {
@@ -132,10 +132,48 @@ const postprescription=async(req,res)=>
     
 
   
+const getprediction=async(req,res)=>
+{
+  const id = req.query.id;
+  console.log(id)
+  const fileid = req.query.fileId;
+  console.log(fileid)
+  
+  try {
+    const patientData = await patient_data.findOne({ _id: id });
+    console.log(patientData)
+    if (!patientData) {
+      return res.status(404).send({ error: 'Patient not found' });
+    }
+  
+    const fileObj = patientData.fileId;
+    console.log(fileObj)
+    if (!fileObj) {
+      return res.status(404).send({ error: 'File not found' });
+    }
+    const file = fileObj.file;
+    if (file !== fileid) {
+      return res.status(404).send({ error: 'File not found' });
+    }
+    
+    const predictions = fileObj.predictions;
+    if (!predictions || !predictions.length) {
+      return res.status(404).send({ error: 'No predictions found' });
+    }
+    
+    const prediction = predictions[0]; // assuming you want the first prediction
+    const predictionData = prediction.prediction; // assuming the prediction data is in a property called "prediction"
+    console.log(predictionData)
+    
+    res.send({ prediction: predictionData });
+  }catch(err)
+  {
+    console.log("error occured",err)
+  }
+}
 
 
 
 
 
-
-module.exports = { getPatients, getpatientdetails ,uploadpatient,getfiles,chatbot,postprescription};
+module.exports = { getPatients, getpatientdetails ,uploadpatient,getfiles,chatbot,postprescription,getprediction};
