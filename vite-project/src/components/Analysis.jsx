@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import jsPDF from 'jspdf'; // Import jspdf library
 import 'jspdf-autotable'; // Import autotable plugin
 import Navigationvar from './Navigationvar';
-import bot from '../assets/chat-bot-logo-design-concept-600nw-1938811039.webp';
 
+import bot from '../assets/chat-bot-logo-design-concept-600nw-1938811039.webp';
 
 export default function Analysis() {
   const [patient, setPatient] = useState(null);
   
-  const { id } = useParams();
   
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getReportDetails = async () => {
@@ -25,10 +26,22 @@ export default function Analysis() {
 
     getReportDetails();
   }, [id]);
+
+  const handlePDFView = async () => {
+    try {
+      const response = await axios.get(`/en/files/${patient.file}`, { responseType: 'arraybuffer' });
+      const binaryData = new Uint8Array(response.data);
+      const blob = new Blob([binaryData], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } catch (error) {
+      console.error("Error fetching PDF file:", error);
+    }
+  };
+
   const handleChatbotClick = async () => {
     navigate('/chatbot');
   };
-
 
   const generatePDF = () => {
     if (!patient) {
@@ -39,6 +52,8 @@ export default function Analysis() {
     const doc = new jsPDF();
 
     // Add report details to the PDF
+    doc.setFontSize(18);
+  doc.text('SAANJH SAHAYAK', doc.internal.pageSize.width / 2, 10, { align: 'center' });
     doc.setFontSize(16);
     doc.text('Report Details', 10, 20);
 
@@ -58,6 +73,28 @@ export default function Analysis() {
 
     doc.text(`Severity: ${patient.severity}`, 10, 135);
     doc.text(`Specialist Required: ${patient.specialistReq}`, 10, 145);
+    let yPos = 155;
+
+    // Add precautions
+    if (patient.precautions.length > 0) {
+      doc.text('Precautions:', 10, yPos);
+      yPos += 10;
+      patient.precautions.forEach((precaution, index) => {
+        yPos += 5; // Add spacing between each precaution
+        doc.text(`- ${precaution}`, 15, yPos + index * 10);
+      });
+      yPos += (patient.precautions.length * 10) + 10; // Add extra space after precautions
+    }
+  
+    // Add doctor's note
+    if (patient.doctorNotes) {
+      doc.text('Doctor\'s Note:', 10, yPos);
+      yPos += 10;
+      const doctorNoteLines = doc.splitTextToSize(patient.doctorNotes, doc.internal.pageSize.width - 20);
+      doctorNoteLines.forEach((line, index) => {
+        doc.text(line, 15, yPos + index * 10);
+      });
+    }
 
     // Save the PDF
     doc.save(`Report-${patient._id}.pdf`);
@@ -65,10 +102,10 @@ export default function Analysis() {
 
   return (
     <div>
-      <Navigationvar/>
+      <Navigationvar />
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         {patient ? (
-          <div style={{ 
+          <div style={{
             padding: '10px',
             marginTop: '6%',
             border: '1px solid #ccc',
@@ -87,23 +124,23 @@ export default function Analysis() {
             </div>
             <p><strong>Summary:</strong> {patient.summary}</p>
             <p><strong>Specialist Required:</strong> {patient.specialistReq}</p>
-            <p><strong>Precautions</strong></p> {patient.precautions.map((condition, index) => (
-                    <span key={index} className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full">
-                      <li>{condition}</li>
-                    </span>
-                  ))}
-            <p><strong>Possible Diseases</strong></p> {patient.possibleDiseases.map((condition, index) => (
-                    <span key={index} className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full">
-                      <li>{condition}</li>
-                    </span>
-                  ))}
+            <p><strong>Precautions:</strong></p> {patient.precautions.map((condition, index) => (
+              <span key={index} className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full">
+                <li>{condition}</li>
+              </span>
+            ))}
+            <p><strong>Possible Diseases:</strong></p> {patient.possibleDiseases.map((condition, index) => (
+              <span key={index} className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full">
+                <li>{condition}</li>
+              </span>
+            ))}
             <p><strong>Doctor's Note:</strong> {patient.doctorNotes}</p>
 
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
               <button onClick={generatePDF} style={{ padding: '10px 20px', backgroundColor: '#990011FF', color: 'white', border: 'none', borderRadius: '5px', marginRight: '10px' }}>
                 Download PDF
               </button>
-              <button style={{ padding: '10px 20px', backgroundColor: '#990011FF', color: 'white', border: 'none', borderRadius: '5px', marginRight: '10px' }}  >
+              <button onClick={handlePDFView} style={{ padding: '10px 20px', backgroundColor: '#990011FF', color: 'white', border: 'none', borderRadius: '5px', marginRight: '10px' }}>
                 View Report
               </button>
             </div>
@@ -115,6 +152,7 @@ export default function Analysis() {
       <div style={{ position: 'fixed', bottom: '20px', right: '20px', cursor: 'pointer' }} onClick={handleChatbotClick}>
         <img src={bot} alt="Chatbot Icon" style={{ width: '50px', height: '50px' }} />
       </div>
+      
     </div>
   );
 }

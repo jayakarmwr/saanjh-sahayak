@@ -45,33 +45,24 @@ const PatientForm = () => {
 
   const containerStyle = {
     display: 'flex',
-    maxWidth: '1200px',
+    maxWidth: '800px',
     margin: '0 auto',
-    padding: '1rem',
+    padding: '2rem',
     border: '1px solid #ccc',
     borderRadius: '8px',
-    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
     marginTop: '5%',
-    flexDirection: 'row',
+    flexDirection: 'column',
+    backgroundColor: '#f5f5f5',
   };
 
-  const formContainerStyle = {
-    flex: 1,
+  const headerStyle = {
+    backgroundColor: '#990011FF',
+    color: 'white',
+    textAlign: 'center',
     padding: '1rem',
-  };
-
-  const imageContainerStyle = {
-    flex: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '1rem',
-  };
-
-  const imageStyle = {
-    maxWidth: '100%',
-    height: '100%',
-    borderRadius: '8px',
+    borderTopLeftRadius: '8px',
+    borderTopRightRadius: '8px',
   };
 
   const formGroupStyle = {
@@ -86,7 +77,7 @@ const PatientForm = () => {
 
   const inputStyle = {
     width: '100%',
-    padding: '0.5rem',
+    padding: '0.75rem',
     border: '1px solid #ccc',
     borderRadius: '4px',
     boxSizing: 'border-box',
@@ -102,121 +93,108 @@ const PatientForm = () => {
     borderRadius: '4px',
     cursor: 'pointer',
     transition: 'background-color 0.3s ease',
+    marginTop: '1rem',
   };
 
   const buttonHoverStyle = {
     backgroundColor: '#990011FF',
   };
 
-  const mediaQueryStyle = `
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
-      button {
-        width: 100%;
-        padding: 0.75rem;
-      }
-    }
-  `;
-
   return (
     <div>
       <Navigationvar />
       <div className="container" style={containerStyle}>
-        <style>{mediaQueryStyle}</style>
-        <div style={formContainerStyle}>
-          <form onSubmit={handleSubmit}>
-            <div className="form-group" style={formGroupStyle}>
-              <label htmlFor="name" style={labelStyle}>Name</label>
-              <input
-                type="text"
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                style={inputStyle}
-              />
-            </div>
+        <div style={headerStyle}>
+          <h2>Patient Details</h2>
+          <p>Record a patient's medical details</p>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group" style={formGroupStyle}>
+            <label htmlFor="name" style={labelStyle}>Name</label>
+            <input
+              type="text"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              style={inputStyle}
+            />
+          </div>
 
-            <div className="form-group" style={formGroupStyle}>
-              <label htmlFor="age" style={labelStyle}>Age</label>
-              <input
-                type="number"
-                id="age"
-                value={age}
-                onChange={(e) => setAge(e.target.value)}
-                required
-                style={inputStyle}
-              />
-            </div>
+          <div className="form-group" style={formGroupStyle}>
+            <label htmlFor="age" style={labelStyle}>Age</label>
+            <input
+              type="number"
+              id="age"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
+              required
+              style={inputStyle}
+            />
+          </div>
 
-            <div className="form-group" style={formGroupStyle}>
-              <label htmlFor="gender" style={labelStyle}>Gender</label>
-              <select
-                id="gender"
-                value={gender}
-                onChange={(e) => setGender(e.target.value)}
-                required
-                style={inputStyle}
-              >
-                <option value="">Select Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-
-            <div className="form-group" style={formGroupStyle}>
-              <label htmlFor="dob" style={labelStyle}>Date of Birth</label>
-              <input
-                type="date"
-                id="dob"
-                value={DOB}
-                onChange={(e) => setDob(e.target.value)}
-                required
-                style={inputStyle}
-              />
-            </div>
-
-            <div className="form-group" style={formGroupStyle}>
-              <label htmlFor="chronicCondition" style={labelStyle}>Chronic Conditions</label>
-              <input
-                type="text"
-                id="chronicCondition"
-                value={chronicCondition}
-                onChange={(e) => setChronicCondition(e.target.value)}
-                style={inputStyle}
-              />
-              <button type="button" onClick={handleAddChronicCondition} style={buttonStyle}>
-                Add
-              </button>
-            </div>
-
-            {chronics.length > 0 && (
-              <div style={formGroupStyle}>
-                <label style={labelStyle}>Chronic Conditions List</label>
-                <ul>
-                  {chronics.map((condition, index) => (
-                    <li key={index}>{condition}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            <button
-              type="submit"
-              style={{ ...buttonStyle }}
-              onMouseOver={(e) => e.currentTarget.style.backgroundColor = buttonHoverStyle.backgroundColor}
-              onMouseOut={(e) => e.currentTarget.style.backgroundColor = buttonStyle.backgroundColor}
+          <div className="form-group" style={formGroupStyle}>
+            <label htmlFor="gender" style={labelStyle}>Gender</label>
+            <select
+              id="gender"
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+              required
+              style={inputStyle}
             >
-              Submit
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div className="form-group" style={formGroupStyle}>
+            <label htmlFor="dob" style={labelStyle}>Date of Birth</label>
+            <input
+              type="date"
+              id="dob"
+              value={DOB}
+              onChange={(e) => setDob(e.target.value)}
+              required
+              style={inputStyle}
+            />
+          </div>
+
+          <div className="form-group" style={formGroupStyle}>
+            <label htmlFor="chronicCondition" style={labelStyle}>Chronic Conditions</label>
+            <input
+              type="text"
+              id="chronicCondition"
+              value={chronicCondition}
+              onChange={(e) => setChronicCondition(e.target.value)}
+              style={inputStyle}
+            />
+            <button type="button" onClick={handleAddChronicCondition} style={{ ...buttonStyle }}>
+              Add
             </button>
-          </form>
-        </div>
-        <div style={imageContainerStyle}>
-          <img src={image} alt="Side Image" style={imageStyle} />
-        </div>
+          </div>
+
+          {chronics.length > 0 && (
+            <div style={formGroupStyle}>
+              <label style={labelStyle}>Chronic Conditions List</label>
+              <ul>
+                {chronics.map((condition, index) => (
+                  <li key={index}>{condition}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <button
+            type="submit"
+            style={buttonStyle}
+            onMouseOver={(e) => e.currentTarget.style.backgroundColor = buttonHoverStyle.backgroundColor}
+            onMouseOut={(e) => e.currentTarget.style.backgroundColor = buttonStyle.backgroundColor}
+          >
+            Submit
+          </button>
+        </form>
       </div>
       <div style={{ position: 'fixed', bottom: '20px', right: '20px', cursor: 'pointer' }} onClick={handleChatbotClick}>
         <img src={bot} alt="Chatbot Icon" style={{ width: '50px', height: '50px' }} />

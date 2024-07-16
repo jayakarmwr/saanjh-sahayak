@@ -19,7 +19,7 @@ router.post("/updateDoctorNotes/:id",updatedoctornotes)
 router.post("/chat",chatbot);
 router.post ("/precription",postprescription);
 router.get('/getprediction',getprediction);
-router.get('/pdfid/:id',pdfid);
+router.get('/files/:id',pdfid);
 router.get('/getdates/:id',getDates)
 
 

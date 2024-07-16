@@ -32,6 +32,17 @@ export default function Doctoranalysis() {
   const handleEdit = () => {
     setIsEditing(true);
   };
+  const handlePDFView = async () => {
+    try {
+      const response = await axios.get(`/en/files/${patient.file}`, { responseType: 'arraybuffer' });
+      const binaryData = new Uint8Array(response.data);
+      const blob = new Blob([binaryData], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } catch (error) {
+      console.error("Error fetching PDF file:", error);
+    }
+  };
 
   const handleSave = async () => {
     try {
@@ -119,13 +130,16 @@ export default function Doctoranalysis() {
                 </button>
               </div>
             ) : (
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <div style={{ display: 'flex', justifyContent: 'center' ,gap:'4%'}}>
                 <button
                   onClick={handleEdit}
                   style={{ padding: '10px 20px', backgroundColor: '#990011FF', color: 'white', border: 'none', borderRadius: '5px' }}
                 >
                   Edit Doctor's Notes
                 </button>
+                <button onClick={handlePDFView} style={{ padding: '10px 20px', backgroundColor: '#990011FF', color: 'white', border: 'none', borderRadius: '5px', marginRight: '10px' }}>
+                View Report
+              </button>
               </div>
             )}
           </div>

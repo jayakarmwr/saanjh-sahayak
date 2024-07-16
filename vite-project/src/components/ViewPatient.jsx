@@ -20,6 +20,11 @@ export default function ViewPatient() {
   const handleChatbotClick = async () => {
     navigate('/chatbot');
   };
+  async function getDates() {
+    console.log("hi")
+    const response = await axios.get(`/en/getdates/${id}`);
+    setReportsDate(response.data)
+  }
   
 
   useEffect(() => {
@@ -93,7 +98,7 @@ export default function ViewPatient() {
       <div style={{ padding: '20px' ,height:'100%'}}>
         
 
-        {patientDetails && (
+        {patientDetails && reportsDate &&(
           <div style={{ display: 'flex', backgroundColor: 'white', padding: '20px', borderRadius: '10px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
             <div style={{ flex: 1, marginRight: '20px' }}>
               <h3>Patient Profile</h3>
@@ -105,9 +110,9 @@ export default function ViewPatient() {
               <p>Chronics: {patientDetails.chronics.join(', ')}</p>
             </div>
             <div style={{ flex: 2 }}>
-              <h3>Latest Lab Results</h3>
+              <h3>Previous test reports: {patientDetails.reportsList.length}</h3>
               <div>
-                {patientDetails.reportsList && patientDetails.reportsList.map((file, index) => (
+              {reportsDate.map((report, index) =>(
                   <div key={index} className="file-item" style={{
                     backgroundColor: '#e9ecef',
                     color: '#495057',
@@ -117,9 +122,10 @@ export default function ViewPatient() {
                     cursor: 'pointer',
                     display: 'flex',
                     alignItems: 'center'
-                  }} onClick={() => handleFileClick(file)}>
+                  }} onClick={() => handleFileClick(report.file)}>
                     <i className="fas fa-file-alt" style={{ fontSize: '20px', color: '#e74c3c', marginRight: '10px' }} />
-                    <p>File ID: {file}</p>
+                    <p>{report.date}</p>
+                    <p>{report.specialistReq}</p>
                   </div>
                 ))}
               </div>
