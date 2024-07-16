@@ -5,6 +5,8 @@ import Navigationvar from './Navigationvar';
 import female from '../assets/pngtree-female-user-avatars-flat-style-women-profession-vector-png-image_1529171.jpg';
 import male from '../assets/pngtree-user-vector-avatar-png-image_1541962.jpg';
 import bot from '../assets/chat-bot-logo-design-concept-600nw-1938811039.webp';
+import Verified from '../assets/pngtree-verified-stamp-vector-png-image_7105265.png';
+import pending from '../assets/pngtree-wrong-icon-png-image_6525689.png';
 
 export default function ViewPatient() {
   const { id } = useParams();
@@ -15,7 +17,8 @@ export default function ViewPatient() {
   const [img, setImg] = useState("");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [reportsDate, setReportsDate] = useState(null)
+  const [reportsDate, setReportsDate] = useState(null);
+  
   
   const handleChatbotClick = async () => {
     navigate('/chatbot');
@@ -45,6 +48,7 @@ export default function ViewPatient() {
     const  getDates=async() =>{
       console.log("hi")
       const response = await axios.get(`/en/getdates/${id}`);
+      
       setReportsDate(response.data)
     }
     
@@ -126,6 +130,7 @@ export default function ViewPatient() {
                     <i className="fas fa-file-alt" style={{ fontSize: '20px', color: '#e74c3c', marginRight: '10px' }} />
                     <p>{report.date}</p>
                     <p>{report.specialistReq}</p>
+                            
                   </div>
                 ))}
               </div>

@@ -8,7 +8,7 @@ import Caretaker from './components/Caretaker';
 import Doctoranalysis from './components/Doctoranalysis';
 import ViewPatient from './components/ViewPatient';
 import PatientForm from './components/PatientForm';
-import Load from './components/Load';
+
 import Chatbot from './components/Chatbot';
 import Analysis from './components/Analysis';
 
@@ -28,7 +28,7 @@ function App() {
       <Route path='/viewpatient/:id' element={<ViewPatient/>}/>
       {/*<Route path='/patientform' element={<PatientForm/>}/>*/}
       <Route path='/signup' element={<Signup/>}/>
-      <Route path='/form' element={<Load/>}/>
+      
       <Route path='/chatbot' element={<Chatbot/>}/>
       <Route path='/report/:id' element={<Analysis/>}/>
      
