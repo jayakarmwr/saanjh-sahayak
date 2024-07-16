@@ -69,6 +69,7 @@ const styles = {
     width: '100%',
     maxWidth: '400px',
     textAlign: 'center',
+    marginTop:'3%'
   },
   loginHeader: {
     marginBottom: '30px',

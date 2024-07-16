@@ -15,6 +15,7 @@ export default function Patient() {
   const [img, setImg] = useState("");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+ 
   
   const handleChatbotClick = async () => {
     navigate('/chatbot');
