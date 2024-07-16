@@ -1,7 +1,9 @@
 
 
 const { GoogleGenerativeAI } = require('@google/generative-ai')
-const { patient} = require("../Schema");
+const { patient,report} = require("../Schema");
+
+
 
 
 const getPatients = async (req, res) => {
@@ -31,7 +33,7 @@ const getpatientdetails=async(req,res)=>
   const uploadpatient=async(req,res)=>
     {
       try {
-        const patientData = new patient_data(req.body);
+        const patientData = new patient(req.body);
         await patientData.save();
         res.status(201).send(patientData);
       } catch (error) {
@@ -43,7 +45,7 @@ const getpatientdetails=async(req,res)=>
     const getfiles = async (req, res) => {
       try {
         const id = req.query.id;
-        const data = await patient_data.findOne({ _id: id }).select('fileId'); // Find a single document and select the fileId field
+        const data = await patient.findOne({ _id: id }).select('reportsList'); // Find a single document and select the fileId field
         if (!data) {
           return res.status(404).json({ message: 'No data found' });
         }
@@ -140,7 +142,7 @@ const getprediction=async(req,res)=>
   console.log(fileid)
   
   try {
-    const patientData = await patient_data.findOne({ _id: id });
+    const patientData = await patient.findOne({ _id: id });
     console.log(patientData)
     if (!patientData) {
       return res.status(404).send({ error: 'Patient not found' });
@@ -173,7 +175,60 @@ const getprediction=async(req,res)=>
 }
 
 
+const getreportsdetails=async(req,res)=>
+{
+  const { id } = req.query; 
+ 
+  
+
+  try {
+    const details = await report.findOne({ _id: id }); 
+    if (!details) {
+      return res.status(404).json({ message: 'No report found for the given ID.' });
+    }
+    
+    res.json(details);
+  } catch (error) {
+    console.error('Error fetching report details:', error);
+    res.status(500).json({ message: 'Server error. Please try again later.' });
+  }
+}
+
+const updatedoctornotes=async(req,res)=>
+{
+  try {
+    const { id } = req.params;
+    const { doctorNotes } = req.body;
+   
+
+    // Validate inputs if needed
+    if (!doctorNotes) {
+      return res.status(400).json({ error: 'Doctor notes are required' });
+    }
+
+    const updatedReport = await report.findByIdAndUpdate(id, {doctorNotes : doctorNotes, isVerified:"true"} , { new: true });
+    res.status(200).json(updatedReport);
+  } catch (error) {
+    console.error('Error updating doctor notes:', error);
+    res.status(500).json({ error: 'Error updating doctor notes' });
+  }
+}
+
+const getDates = async (req,res)=>{
+  const id = req.params.id;
+  const data = await report.find({patientId:id});
+  const dates = data.map(item=>({
+      file: item._id,
+      specialistReq:item.specialistReq,
+      date: item.valuesFromReport.date ? item.valuesFromReport.date : formatDate(item.dateOfReport)
+
+  }))
+  
+  res.json(dates);
+
+}
 
 
 
-module.exports = { getPatients, getpatientdetails ,uploadpatient,getfiles,chatbot,postprescription,getprediction};
+
+module.exports = { getPatients, getpatientdetails ,uploadpatient,getfiles,chatbot,postprescription,getprediction,getreportsdetails,updatedoctornotes,getDates};

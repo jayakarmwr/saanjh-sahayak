@@ -26,6 +26,11 @@ export default function Patientslistd() {
 
     fetchPatients();
   }, []);
+  function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = new Date(dateString);
+    return date.toLocaleDateString(undefined, options);
+  }
 
   return (
     <div>
@@ -34,9 +39,9 @@ export default function Patientslistd() {
           <tr>
             <th scope="col">Patient Id</th>
             <th scope="col">Name</th>
-            <th scope="col">Blood Group</th>
+            <th scope="col">DOB</th>
             <th scope="col">Gender</th>
-            <th scope="col">Age</th>
+            
           </tr>
         </thead>
         <tbody>
@@ -49,10 +54,10 @@ export default function Patientslistd() {
                 )}
               
               </th>
-              <td>{patient.patientName.toUpperCase()}</td>
-              <td>{patient.bloodGroup}</td>
+              <td>{patient.name.toUpperCase()}</td>
+              <td>{formatDate(patient.DOB)}</td>
               <td>{patient.gender.toUpperCase()}</td>
-              <td>{patient.age}</td>
+              
             </tr>
           ))}
         </tbody>

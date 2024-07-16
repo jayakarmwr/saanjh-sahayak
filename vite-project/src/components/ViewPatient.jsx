@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Navigationvar from './Navigationvar';
 import female from '../assets/pngtree-female-user-avatars-flat-style-women-profession-vector-png-image_1529171.jpg';
 import male from '../assets/pngtree-user-vector-avatar-png-image_1541962.jpg';
+import bot from '../assets/chat-bot-logo-design-concept-600nw-1938811039.webp';
 
 export default function ViewPatient() {
   const { id } = useParams();
@@ -14,6 +15,12 @@ export default function ViewPatient() {
   const [img, setImg] = useState("");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [reportsDate, setReportsDate] = useState(null)
+  
+  const handleChatbotClick = async () => {
+    navigate('/chatbot');
+  };
+  
 
   useEffect(() => {
     const fetchPatientDetails = async () => {
@@ -30,35 +37,23 @@ export default function ViewPatient() {
         console.error("Error occurred:", error);
       }
     };
+    const  getDates=async() =>{
+      console.log("hi")
+      const response = await axios.get(`/en/getdates/${id}`);
+      setReportsDate(response.data)
+    }
+    
 
     fetchPatientDetails();
+    getDates();
   }, [id]);
 
-  function formatDate(dateString) {
-    const date = new Date(dateString.replace('T', ' ').replace(/\..+/, ''));
-    return date.toLocaleDateString();
-  }
-
-  function timeElapsed(dateString) {
-    const currentDate = new Date();
-    const uploadedDate = new Date(dateString.replace('T', ' ').replace(/\..+/, ''));
-    const timeDiff = currentDate - uploadedDate;
-    const days = Math.floor(timeDiff / (1000 * 3600 * 24));
-    const months = Math.floor(days / 30);
-
-    if (months > 0) {
-      return `${months} month${months > 1 ? 's' : ''} ago`;
-    } else if (days > 0) {
-      return `${days} day${days > 1 ? 's' : ''} ago`;
-    } else {
-      return 'Uploaded today';
-    }
-  }
+  const handleFileClick = async (file) => {
+    navigate(`/report/${file}`)
+  };
 
   const handleFile = async (event) => {
-    
     const selectedFile = event.target.files[0];
-
 
     if (selectedFile) {
       const reader = new FileReader();
@@ -67,14 +62,17 @@ export default function ViewPatient() {
         const filename = event.target.value.replace("C:\\fakepath\\", "");
 
         try {
+          setLoading(true);
           console.log("hi");
-          const reponse = await axios.post('/en/uploadpdf', { file: fileData, filename: filename, patientId: id, name: patientDetails.name });
-          console.log("submitted sucessfully")
-
+          const response = await axios.post('/en/uploadpdf', { file: fileData, filename: filename, patientId: id, name: patientDetails.name });
+          
+          console.log("submitted successfully");
         } catch (error) {
           console.log("Error uploading details:", error);
-          
           alert('File size too large or other issues.');
+        }
+        finally {
+          setLoading(false);
         }
       };
       reader.readAsDataURL(selectedFile);
@@ -83,100 +81,105 @@ export default function ViewPatient() {
     }
   };
 
- 
- 
+  function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = new Date(dateString);
+    return date.toLocaleDateString(undefined, options);
+  }
 
   return (
-    <div>
+    <div style={{ fontFamily: 'Arial, sans-serif', backgroundColor: '#f4f6f8' }}>
       <Navigationvar />
-      <div className="container">
-        <div className="row">
-          <button className="col-sm" style={{ fontSize: '25px', backgroundColor: '#990011FF', color: 'white', marginTop: '1%', marginLeft: '10%', marginRight: '10%' }}>
-            {patientDetails ? patientDetails.name : "Loading..."}
-          </button>
-        </div>
-      </div>
+      <div style={{ padding: '20px' ,height:'100%'}}>
+        
 
-      {patientDetails && (
-        <div className="container2">
-          <div className="row">
-            <div className="col" style={{ marginLeft: '20%', marginTop: '2%' }}>
-              <h5>PATIENT NAME: {patientDetails.name}</h5>
-              <br />
-              
-              <h5>GENDER: {patientDetails.gender}</h5>
-              <br />
-              <h5>BLOOD GROUP: {patientDetails.bloodGroup}</h5>
-              <br />
+        {patientDetails && (
+          <div style={{ display: 'flex', backgroundColor: 'white', padding: '20px', borderRadius: '10px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+            <div style={{ flex: 1, marginRight: '20px' }}>
+              <h3>Patient Profile</h3>
+              <img src={img} style={{ width: '100px', borderRadius: '50%', marginBottom: '20px' }} alt="Patient" />
+              <p><strong>Contact Details:</strong></p>
+              <p>{patientDetails.name}</p>
+              <p>{patientDetails.gender}</p>
+              <p>DOB: {formatDate(patientDetails.DOB)}</p>
+              <p>Chronics: {patientDetails.chronics.join(', ')}</p>
             </div>
-            <div className="col" style={{ marginTop: '4%' }}>
-              <img src={img} style={{ width: '40%', height: '70%' }} alt="Patient" />
-            </div>
-          </div>
-        </div>
-      )}
-
-      <div className='container7' style={{ marginTop: '5%', marginLeft: '20%', marginRight: '10%' }}>
-        <h5>PREVIOUS REPORTS</h5>
-        {patientDetails && patientDetails.fileId && patientDetails.fileId.map((file, index) => (
-          <div key={index} className="file-item" style={{
-            backgroundColor: '#990011FF',
-            color: 'white',
-            padding: '20px',
-            borderRadius: '10px',
-            boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-            margin: '20px',
-            width: '30%',
-            cursor: 'pointer'
-          }}>
-            <i className="fas fa-file-pdf" style={{ fontSize: '24px', color: '#e74c3c' }} />
-            <p>Date: {formatDate(file.date)} ({timeElapsed(file.date)})</p>
-          </div>
-        ))}
-      </div>
-
-      <div className="container5">
-        <div className="row">
-          <div className="col" style={{ marginTop: '5%', marginLeft: '20%', marginRight: '10%' }}>
-            <h5>UPLOAD NEW REPORT</h5>
-            <label
-              htmlFor="file-upload"
-              className={`bg-blue-500 text-white px-4 py-2 rounded cursor-pointer`}
-            >
-              Upload Reports
-            </label>
-            <input
-              id="file-upload"
-              type="file"
-              className="hidden"
-              onChange={handleFile}
-            />
-            
-            {loading && (
-              <div style={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-                <div style={{
-                  backgroundColor: '#fff',
-                  padding: '20px',
-                  borderRadius: '10px',
-                  boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',
-                }}>
-                  <span style={{ fontSize: '24px', fontWeight: 'bold', color: '#333' }}>uploading...</span>
-                </div>
+            <div style={{ flex: 2 }}>
+              <h3>Latest Lab Results</h3>
+              <div>
+                {patientDetails.reportsList && patientDetails.reportsList.map((file, index) => (
+                  <div key={index} className="file-item" style={{
+                    backgroundColor: '#e9ecef',
+                    color: '#495057',
+                    padding: '8px',
+                    borderRadius: '5px',
+                    margin: '8px 0',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center'
+                  }} onClick={() => handleFileClick(file)}>
+                    <i className="fas fa-file-alt" style={{ fontSize: '20px', color: '#e74c3c', marginRight: '10px' }} />
+                    <p>File ID: {file}</p>
+                  </div>
+                ))}
               </div>
-            )}
+            </div>
           </div>
+        )}
+
+        <div style={{ marginTop: '20px' }}>
+          <h3>Upload New Report</h3>
+          <label
+            htmlFor="file-upload"
+            className={`bg-blue-500 text-white px-4 py-2 rounded cursor-pointer`}
+            style={{ backgroundColor: '#990011FF', color: 'white', padding: '10px 20px', borderRadius: '5px', cursor: 'pointer' }}
+          >
+            Upload Reports
+          </label>
+          <input
+            id="file-upload"
+            type="file"
+            className="hidden"
+            style={{ display: 'none' }}
+            onChange={handleFile}
+          />
+          {loading && (
+          <div style={styles.loadingOverlay}>
+            <div style={styles.spinner}></div>
+          </div>
+        )}
+
+         
         </div>
       </div>
+      <div style={{ position: 'fixed', bottom: '20px', right: '20px', cursor: 'pointer' }} onClick={handleChatbotClick}>
+        <img src={bot} alt="Chatbot Icon" style={{ width: '50px', height: '50px' }} />
+      </div>
+      
+
     </div>
+    
   );
 }
+const styles = {
+  loadingOverlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 9999,
+  },
+  spinner: {
+    width: '50px',
+    height: '50px',
+    border: '5px solid #f3f3f3',
+    borderRadius: '50%',
+    borderTop: '5px solid #3498db',
+    animation: 'spin 1s linear infinite',
+  },
+};

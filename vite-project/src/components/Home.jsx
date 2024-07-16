@@ -20,6 +20,10 @@ const Home = () => {
   const handleChatbotClick = async () => {
     navigate('/chatbot');
   };
+  const handlesignup=async()=>
+  {
+    navigate('/signup')
+  }
 
   return (
     <div>
@@ -32,7 +36,7 @@ const Home = () => {
             <p style={{ fontSize: '23px', marginTop: '9%' }}>
               At Sanjay Sahayak, we empower caregivers with actionable insights through our user-friendly platform and advanced technology like the LLM framework, ensuring proactive care for seniors and enhancing their quality of life.
             </p>
-            <button style={{ fontSize: '20px', marginTop: '7%', backgroundColor: '#990011FF', color: 'white', marginBottom: '7%', borderRadius: '2%' }}>
+            <button style={{ fontSize: '20px', marginTop: '7%', backgroundColor: '#990011FF', color: 'white', marginBottom: '7%', borderRadius: '2%' }} onClick={handlesignup}>
               JOIN OUR SERVICES NOW
             </button>
           </div>
@@ -48,7 +52,7 @@ const Home = () => {
             <p style={{ fontSize: '23px', marginLeft: '3%', marginTop: '7%' }}>
               Enriching Lives Through Compassionate At Sanjay Sahayak, we specialize in both in-home healthcare and long-term facility senior care. Our services are tailored to ensure comfort, safety, and independence for seniors. With a dedicated team, we prioritize personalized and compassionate support for our clients. Whether at home or in a facility, we strive to enhance quality of life and promote holistic wellness. Trust us to be your reliable partner in providing exceptional care for your loved ones.
             </p>
-            <button style={{ fontSize: '20px', marginLeft: '15%', marginTop: '7%', backgroundColor: '#990011FF', color: 'white', marginBottom: '7%', borderRadius: '2%' }} onClick={handleCaretakersClick}>
+            <button style={{ fontSize: '20px', marginLeft: '15%', marginTop: '7%', backgroundColor: '#990011FF', color: 'white', marginBottom: '7%', borderRadius: '2%' }} onClick={handlesignup}>
               JOIN OUR SERVICES NOW
             </button>
           </div>

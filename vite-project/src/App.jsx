@@ -3,13 +3,14 @@ import {BrowserRouter,Routes,Route} from 'react-router-dom';
 import Home from './components/Home';
 import Doctors from './components/Doctors';
 import Patient from './components/Patient';
-
+import Signup from './components/Signup';
 import Caretaker from './components/Caretaker';
-
+import Doctoranalysis from './components/Doctoranalysis';
 import ViewPatient from './components/ViewPatient';
 import PatientForm from './components/PatientForm';
 import Load from './components/Load';
 import Chatbot from './components/Chatbot';
+import Analysis from './components/Analysis';
 
 
 
@@ -21,13 +22,15 @@ function App() {
       <Route path='/' element={<Home/>}/>
       <Route path='/doctors' element={<Doctors/>}/>
       <Route path='/patientd/:id' element={<Patient/>}/>
-      
+      <Route path='/reportdoctor/:id' element={<Doctoranalysis/>}/>
       <Route path='/caretaker' element={<Caretaker/>}/>
       <Route path='/newpatient' element={<PatientForm/>}/>
       <Route path='/viewpatient/:id' element={<ViewPatient/>}/>
       {/*<Route path='/patientform' element={<PatientForm/>}/>*/}
+      <Route path='/signup' element={<Signup/>}/>
       <Route path='/form' element={<Load/>}/>
       <Route path='/chatbot' element={<Chatbot/>}/>
+      <Route path='/report/:id' element={<Analysis/>}/>
      
      
 

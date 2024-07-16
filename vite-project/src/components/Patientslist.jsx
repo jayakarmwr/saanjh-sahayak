@@ -9,6 +9,11 @@ export default function Patientslist() {
   const handlePatientClick = (patientID) => {
     navigate(`/viewpatient/${patientID}`);
   };
+  function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = new Date(dateString);
+    return date.toLocaleDateString(undefined, options);
+  }
 
   useEffect(() => {
     const fetchPatients = async () => {
@@ -39,10 +44,10 @@ export default function Patientslist() {
         </thead>
         <tbody>
           {Patients.map((patient) => (
-            <tr key={patient.patientID} onClick={() => handlePatientClick(patient._id)}>
-              <th scope="row">{patient.patientID}</th>
+            <tr key={patient._id} onClick={() => handlePatientClick(patient._id)}>
+              <th scope="row">{patient._id}</th>
               <td>{patient.name.toUpperCase()}</td>
-              <td>{patient.DOB}</td>
+              <td>{formatDate(patient.DOB)}</td>
               <td>{patient.gender.toUpperCase()}</td>
               
             </tr>

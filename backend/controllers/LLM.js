@@ -28,9 +28,9 @@ const safety_settings = [
     },
 ];
 
-const uploadReport = async (req, res) => {
+/*const uploadReport = async (req, res) => {
     const pId = req.body.name;
-    const pid = new ObjectId('666c5dfef9f86456d8d358df');
+    //const pid = new ObjectId('666c5dfef9f86456d8d358df');
     //TODO: req,res
     let report1 = new report({}); //TODO: need to upload pdf here
     report1 = await report1.save();
@@ -294,7 +294,7 @@ const uploadReport = async (req, res) => {
     console.log('Done');
     res.json("success");
 };
-
+*/
 
 const getParameters = async (req, res) => {
     const parsed = req.body.text;
@@ -499,4 +499,4 @@ const analysis = async (req, res) => {
 
 
 
-module.exports = { uploadReport, getParameters, analysis }
+module.exports = { getParameters, analysis }

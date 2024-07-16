@@ -1,33 +1,45 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Navigationvar from "./Navigationvar";
-import image from '../assets/young-friendly-female-caregiver-senior-260nw-2266110337.webp'
+import image from '../assets/young-friendly-female-caregiver-senior-260nw-2266110337.webp';
+import bot from '../assets/chat-bot-logo-design-concept-600nw-1938811039.webp';
 
 const PatientForm = () => {
-  const [patientName, setPatientName] = useState("");
+  const [name, setName] = useState("");
   const [age, setAge] = useState("");
-  const [bloodGroup, setBloodGroup] = useState("");
-  const [medicalHistory, setMedicalHistory] = useState("");
   const [gender, setGender] = useState("");
+  const [DOB, setDob] = useState("");
+  const [chronicCondition, setChronicCondition] = useState("");
+  const [chronics, setChronics] = useState([]);
+  const handleChatbotClick = async () => {
+    navigate('/chatbot');
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = {
-      patientName,
+      name,
       age,
-      bloodGroup,
-      medicalHistory,
       gender,
+      DOB,
+      chronics,
     };
 
     try {
-      console.log("entered")
+      console.log("entered");
       const response = await axios.post('/en/upload', formData);
-      alert("done")
+      alert("done");
       console.log(response.data);
     } catch (error) {
       console.error('Error submitting patient details:', error);
+    }
+  };
+
+  const handleAddChronicCondition = () => {
+    if (chronicCondition) {
+      setChronics([...chronics, chronicCondition]);
+      setChronicCondition("");
     }
   };
 
@@ -40,7 +52,7 @@ const PatientForm = () => {
     borderRadius: '8px',
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
     marginTop: '5%',
-    flexDirection: 'row', // Flex direction for side-by-side layout
+    flexDirection: 'row',
   };
 
   const formContainerStyle = {
@@ -116,12 +128,12 @@ const PatientForm = () => {
         <div style={formContainerStyle}>
           <form onSubmit={handleSubmit}>
             <div className="form-group" style={formGroupStyle}>
-              <label htmlFor="patientName" style={labelStyle}>Patient Name</label>
+              <label htmlFor="name" style={labelStyle}>Name</label>
               <input
                 type="text"
-                id="patientName"
-                value={patientName}
-                onChange={(e) => setPatientName(e.target.value)}
+                id="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 required
                 style={inputStyle}
               />
@@ -140,29 +152,6 @@ const PatientForm = () => {
             </div>
 
             <div className="form-group" style={formGroupStyle}>
-              <label htmlFor="bloodGroup" style={labelStyle}>Blood Group</label>
-              <input
-                type="text"
-                id="bloodGroup"
-                value={bloodGroup}
-                onChange={(e) => setBloodGroup(e.target.value)}
-                required
-                style={inputStyle}
-              />
-            </div>
-
-            <div className="form-group" style={formGroupStyle}>
-              <label htmlFor="medicalHistory" style={labelStyle}>Medical History</label>
-              <textarea
-                id="medicalHistory"
-                value={medicalHistory}
-                onChange={(e) => setMedicalHistory(e.target.value)}
-                required
-                style={inputStyle}
-              ></textarea>
-            </div>
-
-            <div className="form-group" style={formGroupStyle}>
               <label htmlFor="gender" style={labelStyle}>Gender</label>
               <select
                 id="gender"
@@ -178,6 +167,43 @@ const PatientForm = () => {
               </select>
             </div>
 
+            <div className="form-group" style={formGroupStyle}>
+              <label htmlFor="dob" style={labelStyle}>Date of Birth</label>
+              <input
+                type="date"
+                id="dob"
+                value={DOB}
+                onChange={(e) => setDob(e.target.value)}
+                required
+                style={inputStyle}
+              />
+            </div>
+
+            <div className="form-group" style={formGroupStyle}>
+              <label htmlFor="chronicCondition" style={labelStyle}>Chronic Conditions</label>
+              <input
+                type="text"
+                id="chronicCondition"
+                value={chronicCondition}
+                onChange={(e) => setChronicCondition(e.target.value)}
+                style={inputStyle}
+              />
+              <button type="button" onClick={handleAddChronicCondition} style={buttonStyle}>
+                Add
+              </button>
+            </div>
+
+            {chronics.length > 0 && (
+              <div style={formGroupStyle}>
+                <label style={labelStyle}>Chronic Conditions List</label>
+                <ul>
+                  {chronics.map((condition, index) => (
+                    <li key={index}>{condition}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             <button
               type="submit"
               style={{ ...buttonStyle }}
@@ -191,6 +217,9 @@ const PatientForm = () => {
         <div style={imageContainerStyle}>
           <img src={image} alt="Side Image" style={imageStyle} />
         </div>
+      </div>
+      <div style={{ position: 'fixed', bottom: '20px', right: '20px', cursor: 'pointer' }} onClick={handleChatbotClick}>
+        <img src={bot} alt="Chatbot Icon" style={{ width: '50px', height: '50px' }} />
       </div>
     </div>
   );
