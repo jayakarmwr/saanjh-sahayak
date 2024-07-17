@@ -5,8 +5,7 @@ import Navigationvar from './Navigationvar';
 import female from '../assets/pngtree-female-user-avatars-flat-style-women-profession-vector-png-image_1529171.jpg';
 import male from '../assets/pngtree-user-vector-avatar-png-image_1541962.jpg';
 import bot from '../assets/chat-bot-logo-design-concept-600nw-1938811039.webp';
-import Verified from '../assets/pngtree-verified-stamp-vector-png-image_7105265.png';
-import pending from '../assets/pngtree-wrong-icon-png-image_6525689.png';
+import '../components/spin.css'
 
 export default function ViewPatient() {
   const { id } = useParams();
@@ -130,6 +129,7 @@ export default function ViewPatient() {
                     <i className="fas fa-file-alt" style={{ fontSize: '20px', color: '#e74c3c', marginRight: '10px' }} />
                     <p>{report.date}</p>
                     <p>{report.specialistReq}</p>
+                    
                             
                   </div>
                 ))}
@@ -172,6 +172,7 @@ export default function ViewPatient() {
     
   );
 }
+
 const styles = {
   loadingOverlay: {
     position: 'fixed',
@@ -185,6 +186,7 @@ const styles = {
     alignItems: 'center',
     zIndex: 9999,
   },
+  
   spinner: {
     width: '50px',
     height: '50px',

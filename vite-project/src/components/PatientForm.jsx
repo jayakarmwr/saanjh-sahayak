@@ -3,6 +3,7 @@ import axios from "axios";
 import Navigationvar from "./Navigationvar";
 import image from '../assets/young-friendly-female-caregiver-senior-260nw-2266110337.webp';
 import bot from '../assets/chat-bot-logo-design-concept-600nw-1938811039.webp';
+import { useNavigate } from 'react-router-dom';
 
 const PatientForm = () => {
   const [name, setName] = useState("");
@@ -11,6 +12,8 @@ const PatientForm = () => {
   const [DOB, setDob] = useState("");
   const [chronicCondition, setChronicCondition] = useState("");
   const [chronics, setChronics] = useState([]);
+  const navigate=useNavigate();
+
   const handleChatbotClick = async () => {
     navigate('/chatbot');
   };

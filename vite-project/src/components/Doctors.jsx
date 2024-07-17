@@ -4,10 +4,12 @@ import Patientslistd from './Patientlistd'
 
 import doctor1 from '../assets/smiling-indian-caring-doctor-supporting-holding-hand-olde-senior-female-patient-lying-bed-clinic-hospital-elderly-people-health-care-concept_938508-6362.avif'
 import bot from '../assets/chat-bot-logo-design-concept-600nw-1938811039.webp';
+import { useNavigate } from 'react-router-dom';
+
 export default function Doctors() {
-  
+  const navigate=useNavigate();
   const handleChatbotClick = async () => {
-    //navigate('/chatbot');
+    navigate('/chatbot');
   };
   return (
     <div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams ,useNavigate} from 'react-router-dom';
 import Navigationvar from './Navigationvar';
 import bot from '../assets/chat-bot-logo-design-concept-600nw-1938811039.webp';
 
@@ -8,6 +8,7 @@ export default function Doctoranalysis() {
   const [patient, setPatient] = useState(null);
   const [doctorNotes, setDoctorNotes] = useState('');
   const [isEditing, setIsEditing] = useState(false);
+  const navigate=useNavigate()
 
   const { id } = useParams();
   const handleChatbotClick = async () => {
