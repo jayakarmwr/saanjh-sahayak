@@ -59,7 +59,7 @@ const getpatientdetails=async(req,res)=>
     };
 
 
-const apiKey = "AIzaSyA0PGILzV1yBsyoWb5DJyXltJ_m3AOrYGg";  // Replace with your actual API key
+const apiKey = "AIzaSyAsP6FIwHahsY4ShpkIDu-Vl08DAuKeJRA";  // Replace with your actual API key
 
 const genAI = new GoogleGenerativeAI(apiKey);
 

@@ -5,6 +5,7 @@ import image from '../assets/young-friendly-female-caregiver-senior-260nw-226611
 import bot from '../assets/chat-bot-logo-design-concept-600nw-1938811039.webp';
 import { useNavigate } from 'react-router-dom';
 
+
 const PatientForm = () => {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
@@ -33,6 +34,7 @@ const PatientForm = () => {
       console.log("entered");
       const response = await axios.post('/en/upload', formData);
       alert("done");
+      navigate("/caretaker");
       console.log(response.data);
     } catch (error) {
       console.error('Error submitting patient details:', error);
