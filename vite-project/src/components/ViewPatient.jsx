@@ -6,6 +6,7 @@ import female from '../assets/pngtree-female-user-avatars-flat-style-women-profe
 import male from '../assets/pngtree-user-vector-avatar-png-image_1541962.jpg';
 import bot from '../assets/chat-bot-logo-design-concept-600nw-1938811039.webp';
 import '../components/spin.css'
+import verifyimg from '../assets/pngtree-verified-stamp-vector-png-image_7105265.png'
 
 export default function ViewPatient() {
   const { id } = useParams();
@@ -73,7 +74,7 @@ export default function ViewPatient() {
           setLoading(true);
           console.log("hi");
           const response = await axios.post('/en/uploadpdf', { file: fileData, filename: filename, patientId: id, name: patientDetails.name });
-          
+         
           console.log("submitted successfully");
         } catch (error) {
           console.log("Error uploading details:", error);
@@ -115,24 +116,27 @@ export default function ViewPatient() {
             <div style={{ flex: 2 }}>
               <h3>Previous test reports: {patientDetails.reportsList.length}</h3>
               <div>
-              {reportsDate.map((report, index) =>(
-                  <div key={index} className="file-item" style={{
-                    backgroundColor: '#e9ecef',
-                    color: '#495057',
-                    padding: '8px',
-                    borderRadius: '5px',
-                    margin: '8px 0',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center'
-                  }} onClick={() => handleFileClick(report.file)}>
-                    <i className="fas fa-file-alt" style={{ fontSize: '20px', color: '#e74c3c', marginRight: '10px' }} />
-                    <p>{report.date}</p>
-                    <p>{report.specialistReq}</p>
-                    
-                            
+              {reportsDate.map((report, index) => (
+              <div onClick={() => { handleFileClick(report.file) }} key={index} className="flex items-center gap-4 bg-slate-50 px-4 min-h-[72px] py-2 justify-between cursor-pointer hover:bg-slate-100 hover:scale-105 transition transform duration-300">
+                <div className="flex items-center gap-4">
+                  <div className="text-[#0d151c] flex items-center justify-center rounded-lg bg-[#e7eef4] shrink-0 size-12" data-icon="File" data-size="24px" data-weight="regular">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                      <path
+                        d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"
+                      ></path>
+                    </svg>
                   </div>
-                ))}
+                  <div className="flex flex-col justify-center">
+                    <p className="text-[#0d151c] text-base font-medium leading-normal line-clamp-1">{report.date}</p>
+                    <p className="text-[#49779c] text-sm font-normal leading-normal line-clamp-2">{report.specialistReq}</p>
+                  </div>
+                </div>
+                {report.isVerified && (
+                      <img src={verifyimg} alt="Verified" style={{ width: '40px', height: '20px' }} />
+                    )}
+               
+              </div>
+            ))}
               </div>
             </div>
           </div>

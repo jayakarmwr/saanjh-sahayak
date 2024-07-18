@@ -302,7 +302,7 @@ const getParameters = async (req, res) => {
     const genAI = new GoogleGenerativeAI(apiKey);
 
     const model = genAI.getGenerativeModel({
-        model: 'gemini-1.5-pro',
+        model: 'gemini-1.5-flash',
         systemInstruction:
             'If input is not related to medical diagnosis must respond with only {\n"medicalQuery":"no"\n}',
     });
@@ -409,7 +409,7 @@ const analysis = async (req, res) => {
     const apiKey = process.env.API_KEY_2;
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({
-        model: 'gemini-1.5-pro',
+        model: 'gemini-1.5-flash',
         systemInstruction:
             'you are a medical reports analyzer which analyze the reports and give output in a specific format where the  Keys are summary of analysis, Date of report , Precautions, Possible disease risks, severity rating out of 10, which specialist(one or less) is needed. the format of output should be in:  Short-Analysis:String,Precautions:Array,Possible-disease risks:Array,Severity:int,specialist:String as json format\n',
     });

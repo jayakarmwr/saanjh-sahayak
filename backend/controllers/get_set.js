@@ -229,7 +229,8 @@ const getDates = async (req,res)=>{
   const dates = data.map(item=>({
       file: item._id,
       specialistReq:item.specialistReq,
-      date: item.valuesFromReport.date ? item.valuesFromReport.date : formatDate(item.dateOfReport)
+      date: item.valuesFromReport.date ? item.valuesFromReport.date : formatDate(item.dateOfReport),
+      isVerified:item.isVerified
 
   }))
   

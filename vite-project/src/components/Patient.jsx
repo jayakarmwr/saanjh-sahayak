@@ -5,6 +5,7 @@ import Navigationvar from './Navigationvar';
 import female from '../assets/pngtree-female-user-avatars-flat-style-women-profession-vector-png-image_1529171.jpg';
 import male from '../assets/pngtree-user-vector-avatar-png-image_1541962.jpg';
 import bot from '../assets/chat-bot-logo-design-concept-600nw-1938811039.webp';
+import verifyimg from '../assets/pngtree-verified-stamp-vector-png-image_7105265.png'
 
 export default function Patient() {
   const { id } = useParams();
@@ -15,11 +16,12 @@ export default function Patient() {
   const [img, setImg] = useState("");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
- 
-  
+  const [reportsDate, setReportsDate] = useState([]);
+
   const handleChatbotClick = async () => {
     navigate('/chatbot');
   };
+
   useEffect(() => {
     const fetchPatientDetails = async () => {
       try {
@@ -35,15 +37,19 @@ export default function Patient() {
         console.error("Error occurred:", error);
       }
     };
+    const getDates = async () => {
+      const response = await axios.get(`/en/getdates/${id}`);
+      console.log(response.data)
+      setReportsDate(response.data);
+    };
 
     fetchPatientDetails();
+    getDates();
   }, [id]);
 
   const handleFileClick = async (file) => {
-    navigate(`/reportdoctor/${file}`)
+    navigate(`/reportdoctor/${file}`);
   };
-
-  
 
   function formatDate(dateString) {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -55,8 +61,6 @@ export default function Patient() {
     <div style={{ fontFamily: 'Arial, sans-serif', backgroundColor: '#f4f6f8' }}>
       <Navigationvar />
       <div style={{ padding: '20px' }}>
-        
-
         {patientDetails && (
           <div style={{ display: 'flex', backgroundColor: 'white', padding: '20px', borderRadius: '10px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
             <div style={{ flex: 1, marginRight: '20px' }}>
@@ -71,27 +75,30 @@ export default function Patient() {
             <div style={{ flex: 2 }}>
               <h3>Latest Lab Results</h3>
               <div>
-                {patientDetails.reportsList && patientDetails.reportsList.map((file, index) => (
-                  <div key={index} className="file-item" style={{
-                    backgroundColor: '#e9ecef',
-                    color: '#495057',
-                    padding: '8px',
-                    borderRadius: '5px',
-                    margin: '8px 0',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center'
-                  }} onClick={() => handleFileClick(file)}>
-                    <i className="fas fa-file-alt" style={{ fontSize: '20px', color: '#e74c3c', marginRight: '10px' }} />
-                    <p>File ID: {file}</p>
+                {reportsDate && reportsDate.map((report, index) => (
+                  <div onClick={() => { handleFileClick(report.file) }} key={index} className="flex items-center gap-4 bg-slate-50 px-4 min-h-[72px] py-2 justify-between cursor-pointer hover:bg-slate-100 hover:scale-105 transition transform duration-300">
+                    <div className="flex items-center gap-4">
+                      <div className="text-[#0d151c] flex items-center justify-center rounded-lg bg-[#e7eef4] shrink-0 size-12" data-icon="File" data-size="24px" data-weight="regular">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                          <path
+                            d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"
+                          ></path>
+                        </svg>
+                      </div>
+                      <div className="flex flex-col justify-center">
+                        <p className="text-[#0d151c] text-base font-medium leading-normal line-clamp-1">{report.date}</p>
+                        <p className="text-[#49779c] text-sm font-normal leading-normal line-clamp-2">{report.specialistReq}</p>
+                      </div>
+                    </div>
+                    {report.isVerified && (
+                      <img src={verifyimg} alt="Verified" style={{ width: '40px', height: '20px' }} />
+                    )}
                   </div>
                 ))}
               </div>
             </div>
           </div>
         )}
-
-        
       </div>
       <div style={{ position: 'fixed', bottom: '20px', right: '20px', cursor: 'pointer' }} onClick={handleChatbotClick}>
         <img src={bot} alt="Chatbot Icon" style={{ width: '50px', height: '50px' }} />
