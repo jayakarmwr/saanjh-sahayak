@@ -11,6 +11,7 @@ import PatientForm from './components/PatientForm';
 
 import Chatbot from './components/Chatbot';
 import Analysis from './components/Analysis';
+import User from './components/User';
 
 
 
@@ -31,6 +32,7 @@ function App() {
       
       <Route path='/chatbot' element={<Chatbot/>}/>
       <Route path='/report/:id' element={<Analysis/>}/>
+      <Route path="/user/:userrole" element={<User/>}/>
      
      
 

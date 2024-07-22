@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {getPatients,getpatientdetails,uploadpatient,getfiles,chatbot,postprescription,getprediction,getreportsdetails,updatedoctornotes,getDates} = require('./controllers/get_set')
+const {getPatients,getpatientdetails,uploadpatient,getfiles,chatbot,postprescription,getprediction,getreportsdetails,updatedoctornotes,getDates,signup} = require('./controllers/get_set')
 const { uploadpdf ,pdfid}=require('./controllers/pdfs');
 const {getParameters,analysis} = require('./controllers/LLM')
 
@@ -20,7 +20,8 @@ router.post("/chat",chatbot);
 router.post ("/precription",postprescription);
 router.get('/getprediction',getprediction);
 router.get('/files/:id',pdfid);
-router.get('/getdates/:id',getDates)
+router.get('/getdates/:id',getDates);
+router.post('/signup',signup);
 
 
 module.exports = router;

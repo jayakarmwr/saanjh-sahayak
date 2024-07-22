@@ -238,7 +238,12 @@ const getDates = async (req,res)=>{
 
 }
 
+const signup=async(req,res)=>
+{
+  const email=req.body.email;
+  console.log(email);
+  res.json({message:"done"})
+}
 
 
-
-module.exports = { getPatients, getpatientdetails ,uploadpatient,getfiles,chatbot,postprescription,getprediction,getreportsdetails,updatedoctornotes,getDates};
+module.exports = { getPatients, getpatientdetails ,uploadpatient,getfiles,chatbot,postprescription,getprediction,getreportsdetails,updatedoctornotes,getDates,signup};

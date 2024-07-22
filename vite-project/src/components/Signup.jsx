@@ -12,9 +12,11 @@ const Signup = () => {
   const handleSignIn = (event) => {
     event.preventDefault();
     if (userRole === "doctor") {
-      navigate("/doctors");
+      //navigate(`/user/${userRole}`);
+      navigate('/doctors')
     } else if (userRole === "caretaker") {
-      navigate("/caretaker");
+      //navigate(`/userr/${userRole}`);
+      navigate('/caretaker');
     } else {
       alert("Please select a role before signing in.");
     }
