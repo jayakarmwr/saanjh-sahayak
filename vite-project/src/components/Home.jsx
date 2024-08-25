@@ -22,7 +22,7 @@ const Home = () => {
   };
   const handlesignup=async()=>
   {
-    navigate('/signup')
+    navigate('/login')
   }
 
   return (
