@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate} from 'react-router-dom';
 import Navigationvar from "./Navigationvar";
-import bot from '../assets/chat-bot-logo-design-concept-600nw-1938811039.webp';
+
 
 function Newuser() {
   const [email, setEmail] = useState('');
@@ -10,9 +10,7 @@ function Newuser() {
   const [role, setRole] = useState('doctor'); // Default role can be 'doctor'
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
-  const handleChatbotClick = async () => {
-    navigate('/chatbot');
-  };
+  
 
   const handleSubmit = async () => {
     try {
@@ -84,9 +82,7 @@ function Newuser() {
         </button>
         {message && <p>{message}</p>}
       </div>
-      <div style={{ position: 'fixed', bottom: '20px', right: '20px', cursor: 'pointer' }} onClick={handleChatbotClick}>
-        <img src={bot} alt="Chatbot Icon" style={{ width: '50px', height: '50px' }} />
-      </div>
+      
     </div>
     </div>
   );

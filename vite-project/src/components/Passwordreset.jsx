@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Navigationvar from "./Navigationvar";
-import bot from '../assets/chat-bot-logo-design-concept-600nw-1938811039.webp';
+
 
 function Passwordreset() {
   const { token } = useParams(); // Assuming the token is passed as a URL parameter
@@ -10,10 +10,7 @@ function Passwordreset() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
 
-  const navigate = useNavigate();
-  const handleChatbotClick = async () => {
-    navigate('/chatbot');
-  };
+  
 
   const handleReset = async () => {
     if (password !== confirmPassword) {
@@ -82,9 +79,7 @@ function Passwordreset() {
         </button>
         {message && <p>{message}</p>}
       </div>
-      <div style={{ position: 'fixed', bottom: '20px', right: '20px', cursor: 'pointer' }} onClick={handleChatbotClick}>
-        <img src={bot} alt="Chatbot Icon" style={{ width: '50px', height: '50px' }} />
-      </div>
+     
    
     </div>
     </div>
