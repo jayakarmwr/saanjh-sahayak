@@ -7,6 +7,7 @@ const {getParameters,analysis} = require('./controllers/LLM')
 
 
 
+
 router.get('/getpatients',getPatients);
 router.post('/getparameters',getParameters)
 router.post('/analysis',analysis);

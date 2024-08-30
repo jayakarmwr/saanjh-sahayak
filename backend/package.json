@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^1.7.2",
+    "base64-stream": "^1.0.0",
     "bootstrap": "^5.3.3",
     "cors": "^2.8.5",
     "isomorphic-fetch": "^3.0.0",
