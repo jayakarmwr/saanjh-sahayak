@@ -9,7 +9,7 @@ const Chat= () => {
   const API_BASE_URL = 
     import.meta.env.MODE === 'development' 
       ? 'http://localhost:5000/api' 
-      : 'https://vercel.com/jayakarmwrs-projects/saanjh-sahayak-tvn5/DKk2M8YuzAUoxSf47g2tcDBd2a5e';
+      : 'https://saanjh-sahayak-2zjt.vercel.app';
   const [files, setFiles] = useState([]);
   const [messages, setMessages] = useState([]);
   const [userInput, setUserInput] = useState("");
