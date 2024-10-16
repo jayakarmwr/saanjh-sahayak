@@ -11,7 +11,7 @@ import PatientForm from './components/PatientForm';
 import Login from './components/Login';
 import Chatbot from './components/Chatbot';
 import Analysis from './components/Analysis';
-import Chat from './components/chat';
+import Chat from './components/Chat';
 import Newuser from './components/Newuser';
 import Passwordreset from './components/Passwordreset';
 
