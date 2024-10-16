@@ -23,7 +23,7 @@ const PatientForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const formData = {
       name,
       age,
@@ -31,10 +31,10 @@ const PatientForm = () => {
       DOB,
       chronics,
     };
-
+  
     try {
       console.log("entered");
-      const response = await axios.post('/en/upload', formData);
+      const response = await axios.post(`${API_BASE_URL}/en/upload`, formData); // Updated to use API_BASE_URL
       alert("done");
       navigate("/caretaker");
       console.log(response.data);

@@ -20,8 +20,7 @@ export default function Patientslist() {
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-
-        const response =  await axios.get("/en/getpatients") // Ensure the correct URL
+        const response = await axios.get(`${API_BASE_URL}/en/getpatients`); // Updated to use API_BASE_URL
         console.log(response.data);
         setPatients(response.data);
       } catch (err) {

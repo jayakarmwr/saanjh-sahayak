@@ -6,6 +6,10 @@ import ChatHistory from './ChatHistory';
 import './chatbot.css';
 
 const Chat= () => {
+  const API_BASE_URL = 
+    import.meta.env.MODE === 'development' 
+      ? 'http://localhost:5000/api' 
+      : 'https://vercel.com/jayakarmwrs-projects/saanjh-sahayak-tvn5/DKk2M8YuzAUoxSf47g2tcDBd2a5e';
   const [files, setFiles] = useState([]);
   const [messages, setMessages] = useState([]);
   const [userInput, setUserInput] = useState("");
@@ -20,14 +24,16 @@ const Chat= () => {
     for (let i = 0; i < files.length; i++) {
       formData.append('files', files[i]);
     }
-
+  
     try {
-      await axios.post('http://localhost:5000/upload', formData);
+      // Use the API_BASE_URL for the upload endpoint
+      await axios.post(`${API_BASE_URL}/upload`, formData);
       alert("Files uploaded successfully!");
     } catch (error) {
       console.error("Error uploading files", error);
     }
   };
+  
 
   const sendMessage = async () => {
     if (userInput.trim() === "") return;
@@ -37,9 +43,9 @@ const Chat= () => {
     setMessages(newMessages);
 
     try {
-      const response = await axios.post('http://localhost:5000/chat', {
+      const response = await axios.post(`${API_BASE_URL}/chat`, {
         userInput: userInput,
-        history: messages.filter(msg => msg.isUser).map(msg => msg.text)
+        history: messages.filter(msg => msg.isUser).map(msg => msg.text),
       });
 
       setMessages([...newMessages, { text: response.data.answer, isUser: false }]);

@@ -17,9 +17,9 @@ function Newuser() {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('/en/newuser', { email, name, role });
+      const response = await axios.post(`${API_BASE_URL}/en/newuser`, { email, name, role });
       setMessage('Signup successful! Please check your email to set your password.');
-      // Redirect to login page
+      // Redirect to login page if needed
     } catch (error) {
       setMessage('An error occurred.');
       console.error('Error:', error);

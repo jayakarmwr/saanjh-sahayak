@@ -21,7 +21,7 @@ export default function Doctoranalysis() {
   useEffect(() => {
     const getReportDetails = async () => {
       try {
-        const response = await axios.get(`/en/getreportdetails?id=${id}`);
+        const response = await axios.get(`${API_BASE_URL}/en/getreportdetails?id=${id}`); // Use the base URL here
         setPatient(response.data);
         setDoctorNotes(response.data.doctorNotes || ''); // Assuming doctorNotes is part of the response
       } catch (error) {
@@ -37,7 +37,8 @@ export default function Doctoranalysis() {
   };
   const handlePDFView = async () => {
     try {
-      const response = await axios.get(`/en/files/${patient.file}`, { responseType: 'arraybuffer' });
+      // Use the base URL here for the PDF file request
+      const response = await axios.get(`${API_BASE_URL}/en/files/${patient.file}`, { responseType: 'arraybuffer' });
       const binaryData = new Uint8Array(response.data);
       const blob = new Blob([binaryData], { type: 'application/pdf' });
       const url = window.URL.createObjectURL(blob);
@@ -49,10 +50,10 @@ export default function Doctoranalysis() {
 
   const handleSave = async () => {
     try {
-      // Update doctorNotes in the backend
-      await axios.post(`/en/updateDoctorNotes/${id}`, { doctorNotes });
+      // Update doctorNotes in the backend using the base URL
+      await axios.post(`${API_BASE_URL}/en/updateDoctorNotes/${id}`, { doctorNotes });
       setIsEditing(false);
-      alert("Doctor notes updated successfully.")
+      alert("Doctor notes updated successfully.");
       console.log('Doctor notes updated successfully.');
     } catch (error) {
       console.error('Error updating doctor notes:', error);

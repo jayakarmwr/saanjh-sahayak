@@ -25,40 +25,38 @@ export default function ViewPatient() {
   const handleChatbotClick = async () => {
     navigate('/chatbot');
   };
-  async function getDates() {
-    console.log("hi")
-    const response = await axios.get(`/en/getdates/${id}`);
-    setReportsDate(response.data)
-  }
-  
-
-  useEffect(() => {
-    const fetchPatientDetails = async () => {
-      try {
-        const res = await axios.get(`/en/patientdetail?id=${id}`);
-        setPatientDetails(res.data[0]);
-
-        if (res.data[0].gender === "female") {
-          setImg(female);
-        } else if (res.data[0].gender === "male") {
-          setImg(male);
-        }
-      } catch (error) {
-        console.error("Error occurred:", error);
-      }
-    };
-    const  getDates=async() =>{
-      console.log("hi")
-      const response = await axios.get(`/en/getdates/${id}`);
-      
-      setReportsDate(response.data)
+  const getDates = async () => {
+    try {
+      console.log("Fetching dates...");
+      const response = await axios.get(`${API_BASE_URL}/en/getdates/${id}`); // Use your API_BASE_URL here
+      setReportsDate(response.data);
+    } catch (error) {
+      console.error("Error fetching dates:", error);
     }
-    
+  };
 
+  // Function to fetch patient details
+  const fetchPatientDetails = async () => {
+    try {
+      const res = await axios.get(`${API_BASE_URL}/en/patientdetail?id=${id}`); // Use your API_BASE_URL here
+      setPatientDetails(res.data[0]);
+
+      // Set image based on gender
+      if (res.data[0].gender === "female") {
+        setImg(female);
+      } else if (res.data[0].gender === "male") {
+        setImg(male);
+      }
+    } catch (error) {
+      console.error("Error occurred while fetching patient details:", error);
+    }
+  };
+
+  // useEffect to call both functions when 'id' changes
+  useEffect(() => {
     fetchPatientDetails();
     getDates();
   }, [id]);
-
   const handleFileClick = async (file) => {
     navigate(`/report/${file}`)
   };

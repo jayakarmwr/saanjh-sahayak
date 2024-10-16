@@ -27,9 +27,9 @@ export default function Patient() {
   useEffect(() => {
     const fetchPatientDetails = async () => {
       try {
-        const res = await axios.get(`/en/patientdetail?id=${id}`);
+        const res = await axios.get(`${API_BASE_URL}/en/patientdetail?id=${id}`); // Updated to use API_BASE_URL
         setPatientDetails(res.data[0]);
-
+  
         if (res.data[0].gender === "female") {
           setImg(female);
         } else if (res.data[0].gender === "male") {
@@ -39,12 +39,17 @@ export default function Patient() {
         console.error("Error occurred:", error);
       }
     };
+  
     const getDates = async () => {
-      const response = await axios.get(`/en/getdates/${id}`);
-      console.log(response.data)
-      setReportsDate(response.data);
+      try {
+        const response = await axios.get(`${API_BASE_URL}/en/getdates/${id}`); // Updated to use API_BASE_URL
+        console.log(response.data);
+        setReportsDate(response.data);
+      } catch (error) {
+        console.error("Error occurred while fetching dates:", error);
+      }
     };
-
+  
     fetchPatientDetails();
     getDates();
   }, [id]);

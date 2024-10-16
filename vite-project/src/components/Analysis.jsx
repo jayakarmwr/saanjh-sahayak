@@ -20,7 +20,7 @@ export default function Analysis() {
   useEffect(() => {
     const getReportDetails = async () => {
       try {
-        const response = await axios.get(`/en/getreportdetails?id=${id}`);
+        const response = await axios.get(`${API_BASE_URL}/en/getreportdetails?id=${id}`);
         setPatient(response.data);
       } catch (error) {
         console.error('Error fetching report details:', error);
@@ -32,15 +32,21 @@ export default function Analysis() {
 
   const handlePDFView = async () => {
     try {
-      const response = await axios.get(`/en/files/${patient.file}`, { responseType: 'arraybuffer' });
+      // Use the API_BASE_URL to fetch the PDF file
+      const response = await axios.get(`${API_BASE_URL}/en/files/${patient.file}`, { responseType: 'arraybuffer' });
+      
+      // Create a binary data object from the response
       const binaryData = new Uint8Array(response.data);
       const blob = new Blob([binaryData], { type: 'application/pdf' });
+      
+      // Create a URL for the blob and open it in a new tab
       const url = window.URL.createObjectURL(blob);
       window.open(url, '_blank', 'noopener,noreferrer');
     } catch (error) {
       console.error("Error fetching PDF file:", error);
     }
   };
+  
 
   const handleChatbotClick = async () => {
     navigate('/chatbot');

@@ -11,22 +11,22 @@ function Chatbot() {
 
   const handleSend = async () => {
     if (input.trim() === '') return;
-
+  
     const newMessages = [...messages, { text: input, sender: 'user' }];
     setMessages(newMessages);
     setInput('');
-
+  
     try {
-      const response = await axios.post('/en/chat', {
+      const response = await axios.post(`${API_BASE_URL}/en/chat`, { // Include /en here
         message: input,
       });
-
+  
       setMessages([...newMessages, { text: response.data.reply, sender: 'bot' }]);
     } catch (error) {
       console.error('Error communicating with backend:', error);
     }
   };
-
+  
   return (
     <div>
     <Navigationvar />

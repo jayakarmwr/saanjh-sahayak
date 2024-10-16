@@ -20,9 +20,9 @@ function Passwordreset() {
       setMessage('Passwords do not match.');
       return;
     }
-
+  
     try {
-      await axios.post(`/en/reset-password/${token}`, { password });
+      await axios.post(`${API_BASE_URL}/en/reset-password/${token}`, { password });
       setMessage('Password has been set successfully! You can now login.');
       navigate('/login'); // Redirect to login page
     } catch (error) {
