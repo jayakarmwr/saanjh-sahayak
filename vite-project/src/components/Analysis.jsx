@@ -5,9 +5,12 @@ import jsPDF from 'jspdf'; // Import jspdf library
 import 'jspdf-autotable'; // Import autotable plugin
 import Navigationvar from './Navigationvar';
 
+
 import bot from '../assets/chat-bot-logo-design-concept-600nw-1938811039.webp';
 
 export default function Analysis() {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const [patient, setPatient] = useState(null);
   
   

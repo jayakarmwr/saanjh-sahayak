@@ -5,6 +5,8 @@ import done from '../assets/pngtree-green-check-mark-png-image_6525691.png'
 
 
 export default function Patientslistd() {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const navigate = useNavigate();
   const [Patients, setPatients] = useState(null);
 

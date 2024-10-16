@@ -9,6 +9,8 @@ import '../components/spin.css'
 import verifyimg from '../assets/pngtree-verified-stamp-vector-png-image_7105265.png'
 
 export default function ViewPatient() {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const { id } = useParams();
   const [file, setFile] = useState("");
   const [patientDetails, setPatientDetails] = useState(null);

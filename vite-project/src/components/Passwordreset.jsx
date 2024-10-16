@@ -5,6 +5,8 @@ import Navigationvar from "./Navigationvar";
 
 
 function Passwordreset() {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const { token } = useParams(); // Assuming the token is passed as a URL parameter
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');

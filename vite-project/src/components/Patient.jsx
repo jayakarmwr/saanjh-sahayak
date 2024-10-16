@@ -8,6 +8,8 @@ import bot from '../assets/chat-bot-logo-design-concept-600nw-1938811039.webp';
 import verifyimg from '../assets/pngtree-verified-stamp-vector-png-image_7105265.png'
 
 export default function Patient() {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const { id } = useParams();
   const [file, setFile] = useState("");
   const [patientDetails, setPatientDetails] = useState(null);

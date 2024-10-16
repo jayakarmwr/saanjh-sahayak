@@ -7,6 +7,8 @@ import bot from '../assets/chat-bot-logo-design-concept-600nw-1938811039.webp';
 import { useNavigate } from 'react-router-dom';
 
 export default function Doctors() {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const navigate=useNavigate();
   const handleChatbotClick = async () => {
     navigate('/chatbot');

@@ -4,7 +4,11 @@ import Patientslist from './Patientslist'
 import { useNavigate } from 'react-router-dom'
 import caretaker1 from '../assets/nurses-taking-care-elderly-nursing-home_602838-22.avif'
 import bot from '../assets/chat-bot-logo-design-concept-600nw-1938811039.webp';
+
+
 export default function Caretaker() {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const navigate=useNavigate();
     
     const handlenewpatient=async()=>

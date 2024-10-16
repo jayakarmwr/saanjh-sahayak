@@ -5,6 +5,8 @@ import Navigationvar from "./Navigationvar";
 
 
 function Login() {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [userRole, setUserRole] = useState('doctor'); // Default role

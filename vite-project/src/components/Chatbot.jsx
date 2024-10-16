@@ -4,6 +4,8 @@ import './chatbot.css';
 import Navigationvar from './Navigationvar';
 
 function Chatbot() {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
 

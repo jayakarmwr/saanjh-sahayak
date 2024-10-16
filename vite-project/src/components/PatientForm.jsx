@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 
 
 const PatientForm = () => {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
