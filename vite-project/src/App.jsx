@@ -11,7 +11,7 @@ import PatientForm from './components/PatientForm';
 import Login from './components/Login';
 import Chatbot from './components/Chatbot';
 import Analysis from './components/Analysis';
-
+import Chat from './components/chat';
 import Newuser from './components/Newuser';
 import Passwordreset from './components/Passwordreset';
 
@@ -38,7 +38,7 @@ function App() {
       <Route path="/login" element={<Login/>}/>
       <Route path='reset-password/:token' element={<Passwordreset/>}/>
       <Route path="/newuser" element={<Newuser/>}/>
-
+      <Route path="/chat" element={<Chat/>}/>
      
      
 
