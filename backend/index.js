@@ -6,7 +6,6 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const approute = require('./AllRoutes');
 require('dotenv').config();
-https://saanjh-sahayak-2zjt.vercel.app/
 
 const { Pdf} = require("./Schema");
 
