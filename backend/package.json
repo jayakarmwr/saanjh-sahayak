@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  
   "scripts": {
-    "start": "cd ../vite-project&& npm run build&& cd ../backend&&nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "build-frontend": "cd ../vite-project && npm install && npm run build",
+  "start-backend": "cd ../backend && npm install && nodemon index.js",
+  "start": "npm run build-frontend && npm run start-backend",
+  "test": "echo \"Error: no test specified\" && exit 1"
+},
   "author": "",
   "license": "ISC",
   "dependencies": {
