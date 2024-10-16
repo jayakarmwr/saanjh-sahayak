@@ -10,10 +10,10 @@ require('dotenv').config();
 const { Pdf} = require("./Schema");
 
 app.use(cors({
-  origin: 'https://saanjh-sahayak-2zjt.vercel.app', // Adjust this to your frontend's URL
-  credentials: true // If you need to send cookies
-}));
-
+    origin: 'https://saanjh-sahayak-2zjt.vercel.app',
+    credentials: true,
+  }));
+  
 
 const port = process.env.PORT;
 app.use(bodyParser.json({ limit: '100mb' }));
