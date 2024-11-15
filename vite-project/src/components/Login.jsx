@@ -37,37 +37,53 @@ function Login() {
   };
 
   const formStyle = {
-    width: '300px',
+    width: '100%',
+    maxWidth: '400px', // Ensure the form doesn't stretch too much on larger screens
     margin: '50px auto',
-    padding: '20px',
-    border: '1px solid #ccc',
-    borderRadius: '5px',
-    textAlign: 'center'
+    padding: '30px',
+    border: '1px solid #ddd',
+    borderRadius: '8px',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    backgroundColor: '#fff',
+    textAlign: 'center',
+    fontFamily: 'Arial, sans-serif',
   };
-
+  
   const inputStyle = {
     width: '100%',
-    padding: '10px',
-    margin: '10px 0',
-    boxSizing: 'border-box'
+    padding: '12px 16px',
+    margin: '12px 0',
+    boxSizing: 'border-box',
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+    fontSize: '16px',
   };
-
+  
   const buttonStyle = {
     width: '100%',
-    padding: '10px',
-    margin: '10px 0',
-    backgroundColor: '#990011FF',
-    color: 'white',
+    padding: '12px',
+    margin: '12px 0',
+    backgroundColor: '#0066cc', // More appealing blue color
+    color: '#fff',
+    fontSize: '16px',
     border: 'none',
-    borderRadius: '5px',
-    cursor: 'pointer'
+    borderRadius: '4px',
+    cursor: 'pointer',
+    fontWeight: 'bold',
+    transition: 'background-color 0.3s ease',
   };
+  
 
   const linkStyle = {
-    color: '#007bff',
+    color: '#0066cc',
     cursor: 'pointer',
-    textDecoration: 'underline'
+    textDecoration: 'none',
+    fontSize: '14px',
+    transition: 'color 0.3s ease',
   };
+  
+  
+  
 
   return (<div><Navigationvar/>
     <div style={{ textAlign: 'center' }}>

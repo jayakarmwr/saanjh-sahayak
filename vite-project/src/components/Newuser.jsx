@@ -83,6 +83,12 @@ function Newuser() {
         <button style={buttonStyle} onClick={handleSubmit}>
           Signup
         </button>
+        <p>
+          Already have an account? 
+          <span style={linkStyle} onClick={() => navigate('/login')}>
+            Signup here.
+          </span>
+        </p>
         {message && <p>{message}</p>}
       </div>
       
