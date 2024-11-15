@@ -9,10 +9,7 @@ require('dotenv').config();
 
 const { Pdf} = require("./Schema");
 
-app.use(cors({
-    origin: 'https://saanjh-sahayak-2zjt.vercel.app',
-    credentials: true,
-  }));
+app.use(cors({ origin: 'https://saanjh-sahayak-2zjt.vercel.app' }));
   
 
 const port = process.env.PORT;
